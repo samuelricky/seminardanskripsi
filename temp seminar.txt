@@ -1,0 +1,40 @@
+http://j-ptiik.ub.ac.id/index.php/j-ptiik/article/view/4662/2155 (Implementasi Sistem Akuisisi Data Sensor Pertanian Menggunakan Protokol Komunikasi Lora)
+	Implementasi Wireless SensorNode Untuk Pemantauan Lahan Pertanian
+
+-jangan lupa blok diagram diubah
+
+========================================================================
+LORA menggunakan Chirp Spread Spectrum untuk modulasinya.
+	Modulasi sinyal berguna untuk mengubah sinyal analog / digital menjadi carrier sinyal. 
+		Kenapa harus dimodulasi ? contoh penyiar radio. Karena : 1. jarak antar penyiar ke tower radio itu jauh sekali, makanya harus dimodulasi agar frekuensinya tinggi sehingga bisa nyampe ke tower radio.(untuk membuat tower, rumus ketinggian tower yang harus dibuat adalah (lambda / 4) 2. kalau gak dimodulasi itu bisa gampang terkena interferensi. 3. kalau frekuensinya rendah, energi gelombang elektromaknetik yang dihasilkan akan sangat kecil (RUMUS : E = f.h). 4. semakin tinggi frekuensi maka power radiasinya semakin kecil, dan sebaliknya. (rumus power radiasi : ((1/lambda)^2)). (seperti orang ingin melemparkan kertas dengan jarak 10m. kan gak mungkin, makanya dikasi batu biar mungkin.)
+			carrier sinyal adalah sebuah gelombang elektromaknetik yang dikirimkan melalui udara. biasanya frekuensi carier sinyal lebih tinggi daripada input sinyal. Jadi input sinyal harusnya dititipkan di frekuensi yang tinggi (BUKAN MENGUBAH INPUT SINYAL MENJADI FREKUENSI YANG TINGGI). jadi setelah input dimasukan kedalam carier sinyal, amplitude, frekuensi, fase akan berubah. ITULAH YANG DISEBUT MODULASI. 
+		Saat informasi ANALOG diubah menjadi carier sinyal, maka ada 3 hal yang harus dimodulasi : Amplitude Modulation(AM), Frequency Modulation (FM), Phase Modulation (PM).
+		Saat informasi DIGITAL diubah menjadi carier sinyal, maka ada 3 hal yang harus dimodulasi : Amplitude Shift Keying (ASK), Frequency Shift Keying (FSK), Phase Shift Keying (PSK)
+	Setiap end node pasti punya radio module. Radio module berguna untuk modulasi sinyal.
+	Sinyal yang sudah dimodulasi akan ditransmisikan dan diterima melalui gateway. Gateway juga punya radio module. gateway bukan end note. Gateway juga akan me demodulasi sinyal yang diterima untuk menjadi informasi yang asli.
+Komunikasi LoRa dengan gateway bersifat bidirectional, karena keduanya bisa saling mengirim dan menerima sinyal. Maka end note dan gateway disebut transceiver.
+Basic modulation adalah : Amplitude shift keying, frequency shift keying, phase shift keying :
+	Amplitude shift keying(ask)
+		hanya amplitudenya saja yang berubah. Contoh digital 1 amplitudenya menjadi 3, digital 0 ampilitudenya menjadi 1.5
+	Frequency shift keying(fsk)
+		hanya frekuensinya saj ayang berubah. Contoh digital 0 frekuensi rendah, digital 1 frekuensinya tinggi.
+	Phase shift keying(PSK)
+		hanya phasenya saja yang berubah. Contoh digital 0 frekuensinya maju dikit, digital 1 frekuensinya mundur dikit.
+Selain 3 modulasi tersebut, sebenarnya masih banyak tipe2 modulasi lainnya. 
+Lora menggunakan skema spread spectrum modulation yang didasarkan dari Chirp Spread Spectrum (CSS)
+CSS adalah teknik spread spectrum yang menggunakan wideband linier frequency modulated chirp pulse untuk mengenkode informasi.
+	Spread spectrum adalah metode dimana dengan sengaja sinyal di sebar pada frekuensi domain. 
+	Chirp atau sering disebut sweep signal adalah sebuah tone yang menunjukan bahwa frekuensi naik (up-chirp) atau frekeunsi turun (down-chirp) pada waktu tersebut
+	up chirp adalah frekeunsi dari bawah ke atas. Jika sudah sampe atas balik lagi ke bawah, lalu naik lagi. Begitu juga untuk down chirp.
+	kayaknya sih, message diubah ke chirp, lalu di encode.
+	jadi misal messagenya adalah 95. maka bitnya : 1011111. Dengan kata lain, SF = 7. Nah, kayaknya ketinggian sweep signalnya adalah 128 karena ketinggian sweep signal dihitung dengan cara 2^sf = 2^7 = 128. Maka ada 2 chips yaitu (128-95) sampai 128 dan 0 sampai 95.
+	Forwared Error adalah sebuah proses dimana bit error correction ditambahkan pada transmited data
+	sebenarnya ini redundant bit, tapi redundant bit ini akan membantu untuk merestore data pada saat datanya corrupt karena terkena interferensi. Jika semakin banyak bit error correction ditambahkan, maka data akan semakin mudah untuk direstore. Tapi kalau semakin banyak, ya transmited datanya semakin besar (semakin redundant) yang mengakibatkan baterainya cepat habis. 
+	Coding rate merujuk pada proporsi dari transmited bit yang sebenarnya membawa informasi. 
+	Coding rate yang diperbolehkan adalah = 4/5, 4/6,4/7,atau 4/8. atau dengan kata lain CR = 4 / (4 + CR) dimana CR = 1,2,3,4.
+	Contoh, jika SF = 8 dan CR = 1, maka bit yang dibawa adalah 8. Tapi karena CR = 1, maka nilai CR adalah 4/5. Jadi, bit yang akan dibawa sebenarnya adalah 8*(4/5) = 6.4, sisanya adalah error correction bit.
+	
+	
+
+	
+
